@@ -1,4 +1,4 @@
-using System;
+锘縰sing System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -54,11 +54,16 @@ namespace NetCoreBBS.Controllers
                     var avatar = usermodel.Avatar;
                     if (avatar.Length / 1024 > 100)
                     {
-                        return Content("头像文件大小超过100KB");
+                        return Content("澶村儚鏂囦欢澶у皬瓒呰繃100KB");
                     }
                     var ext = Path.GetExtension(avatar.FileName);
-                    var avatarpath = Path.Combine("images", "avatar", user.Id + ext);
+                    var avatarpath = Path.Combine("images", "avatar");
                     var filepath = Path.Combine(_env.WebRootPath, avatarpath);
+                    if (!Directory.Exists(filepath))
+                    {
+                        Directory.CreateDirectory(filepath);
+                    }
+                    filepath = Path.Combine(filepath, user.Id + ext);
                     using (FileStream fs = new FileStream(filepath, FileMode.Create))
                     {
                         avatar.CopyTo(fs);
